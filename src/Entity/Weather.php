@@ -14,93 +14,43 @@ class Weather
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'weather')]
+    #[ORM\ManyToOne(inversedBy: 'weathers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $date = null;
+    private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 1)]
-    private ?string $celcius = null;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $celcius = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $windSpeed = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $precipitation = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $humidity = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    // gettery i settery...
+    public function getId(): ?int { return $this->id; }
 
-    public function getLocation(): ?Location
-    {
-        return $this->location;
-    }
+    public function getLocation(): ?Location { return $this->location; }
+    public function setLocation(?Location $location): self { $this->location = $location; return $this; }
 
-    public function setLocation(?Location $location): static
-    {
-        $this->location = $location;
-        return $this;
-    }
+    public function getDate(): ?\DateTimeInterface { return $this->date; }
+    public function setDate(\DateTimeInterface $date): self { $this->date = $date; return $this; }
 
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
+    public function getCelcius(): ?float { return $this->celcius; }
+    public function setCelcius(float $celcius): self { $this->celcius = $celcius; return $this; }
 
-    public function setDate(\DateTime $date): static
-    {
-        $this->date = $date;
-        return $this;
-    }
+    public function getWindSpeed(): ?float { return $this->windSpeed; }
+    public function setWindSpeed(float $windSpeed): self { $this->windSpeed = $windSpeed; return $this; }
 
-    public function getCelcius(): ?string
-    {
-        return $this->celcius;
-    }
+    public function getPrecipitation(): ?float { return $this->precipitation; }
+    public function setPrecipitation(float $precipitation): self { $this->precipitation = $precipitation; return $this; }
 
-    public function setCelcius(?string $celcius): static
-    {
-        $this->celcius = $celcius;
-        return $this;
-    }
-
-    public function getWindSpeed(): ?float
-    {
-        return $this->windSpeed;
-    }
-
-    public function setWindSpeed(float $windSpeed): static
-    {
-        $this->windSpeed = $windSpeed;
-        return $this;
-    }
-
-    public function getPrecipitation(): ?float
-    {
-        return $this->precipitation;
-    }
-
-    public function setPrecipitation(float $precipitation): static
-    {
-        $this->precipitation = $precipitation;
-        return $this;
-    }
-
-    public function getHumidity(): ?float
-    {
-        return $this->humidity;
-    }
-
-    public function setHumidity(float $humidity): static
-    {
-        $this->humidity = $humidity;
-        return $this;
-    }
+    public function getHumidity(): ?float { return $this->humidity; }
+    public function setHumidity(float $humidity): self { $this->humidity = $humidity; return $this; }
 }

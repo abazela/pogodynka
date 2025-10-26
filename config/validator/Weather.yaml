@@ -1,0 +1,29 @@
+App\Entity\Weather:
+    properties:
+        location:
+            - NotBlank: { groups: [create, edit] }
+            - Valid: { groups: [create, edit] }
+
+        date:
+            - NotBlank: { groups: [create, edit] }
+            - Date: { groups: [create, edit] }
+
+        celcius:
+            - NotBlank: { groups: [create, edit] }
+            - Type: { type: float, groups: [create, edit] }
+            - Range: { min: -50, max: 50, groups: [create, edit] }
+
+        windSpeed:
+            - NotBlank: { groups: [create, edit] }
+            - Type: { type: float, groups: [create, edit] }
+            - Range: { min: 0, max: 200, groups: [create, edit] }
+
+        precipitation:
+            - NotBlank: { groups: [create, edit] }
+            - Type: { type: float, groups: [create, edit] }
+            - Range: { min: 0, max: 1000, groups: [create, edit] }
+
+        humidity:
+            - NotBlank: { groups: [create, edit] }
+            - Type: { type: float, groups: [create, edit] }
+            - Range: { min: 0, max: 100, groups: [create, edit] }

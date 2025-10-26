@@ -1,0 +1,6 @@
+# config/packages.yaml
+imports:
+    - { resource: framework.yaml }
+    - { resource: routing.yaml }
+    - { resource: services.yaml }
+    - { resource: validation.yaml }   # <-- DODAJ TĘ LINIĘ!

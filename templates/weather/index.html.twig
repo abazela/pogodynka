@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Weather{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Weather Data</h1>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-primary">
+                <tr>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Date</th>
+                    <th>Temp (°C)</th>
+                    <th>Wind (m/s)</th>
+                    <th>Rain (mm)</th>
+                    <th>Humidity (%)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for w in weather_records %}
+                    <tr>
+                        <td><strong>{{ w.location.city }}</strong></td>
+                        <td>{{ w.location.country }}</td>
+                        <td>{{ w.date|date('d.m.Y') }}</td>
+                        <td>{{ w.celcius }}</td>
+                        <td>{{ w.windSpeed }}</td>
+                        <td>{{ w.precipitation }}</td>
+                        <td>{{ w.humidity }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">
+                            No weather data available.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

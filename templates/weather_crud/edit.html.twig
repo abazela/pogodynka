@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Weather{% endblock %}
+
+{% block body %}
+    <h1>Edit Weather</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.location) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.celcius) }}
+    {{ form_row(form.windSpeed) }}
+    {{ form_row(form.precipitation) }}
+    {{ form_row(form.humidity) }}
+    <button>Update</button>
+    {{ form_end(form) }}
+
+    <p>
+    <form method="post" action="{{ path('app_weather_delete', {'id': weather.id}) }}" style="display:inline;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ weather.id) }}">
+        <button type="submit" style="background:none;border:none;color:red;padding:0;cursor:pointer;"
+                onclick="return confirm('Na pewno usunąć?');">
+            Delete
+        </button>
+    </form>
+    &nbsp;
+    <a href="{{ path('app_weather_index') }}">Back to list</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prognoza pogody{% endblock %}
+
+{% block body %}
+    <h1>Prognoza pogody</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Miasto</th>
+            <th>Kraj</th>
+            <th>Data</th>
+            <th>°C</th>
+            <th>Wiatr (m/s)</th>
+            <th>Opady (mm)</th>
+            <th>Wilgotność (%)</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for weather in weather_records %}
+            <tr>
+                <td>{{ weather.location.city }}</td>
+                <td>{{ weather.location.country }}</td>
+                <td>{{ weather.date|date('d.m.Y') }}</td>
+                <td>{{ weather.celcius }}</td>
+                <td>{{ weather.windSpeed }}</td>
+                <td>{{ weather.precipitation }}</td>
+                <td>{{ weather.humidity }}</td>
+                <td>
+                    <a href="{{ path('app_weather_edit', {'id': weather.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="8">Brak prognoz</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_weather_new') }}">Create new</a>
+{% endblock %}
