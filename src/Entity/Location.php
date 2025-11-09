@@ -28,12 +28,12 @@ class Location
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
     private ?string $longitude = null;
 
-    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Weather::class)]
-    private Collection $weather;
+    #[ORM\OneToMany( targetEntity: Weather::class, mappedBy: 'location')]
+    private Collection $weathers;
 
     public function __construct()
     {
-        $this->weather = new ArrayCollection();
+        $this->weathers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,13 +87,13 @@ class Location
 
     public function getWeather(): Collection
     {
-        return $this->weather;
+        return $this->weathers;
     }
 
     public function addWeather(Weather $weather): static
     {
-        if (!$this->weather->contains($weather)) {
-            $this->weather->add($weather);
+        if (!$this->weathers->contains($weather)) {
+            $this->weathers->add($weather);
             $weather->setLocation($this);
         }
         return $this;
@@ -101,8 +101,8 @@ class Location
 
     public function removeWeather(Weather $weather): static
     {
-        if ($this->weather->contains($weather)) {
-            $this->weather->removeElement($weather);
+        if ($this->weathers->contains($weather)) {
+            $this->weathers->removeElement($weather);
             if ($weather->getLocation() === $this) {
                 $weather->setLocation(null);
             }

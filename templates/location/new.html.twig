@@ -3,9 +3,45 @@
 {% block title %}New Location{% endblock %}
 
 {% block body %}
-    <h1>Create new Location</h1>
-
-    {{ include('location/_form.html.twig') }}
-
-    <a href="{{ path('app_location_index') }}">back to list</a>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Create New Location</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+                        <div class="mb-3">
+                            {{ form_label(form.city) }}
+                            {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.city) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.country) }}
+                            {{ form_widget(form.country, {'attr': {'class': 'form-select'}}) }}
+                            {{ form_errors(form.country) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.latitude) }}
+                            {{ form_widget(form.latitude, {'attr': {'class': 'form-control', 'step': '0.0000001'}}) }}
+                            {{ form_errors(form.latitude) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.longitude) }}
+                            {{ form_widget(form.longitude, {'attr': {'class': 'form-control', 'step': '0.0000001'}}) }}
+                            {{ form_errors(form.longitude) }}
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-success btn-lg">Save</button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="mt-3 text-center">
+                    <a href="{{ path('app_location_index') }}" class="btn btn-secondary">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

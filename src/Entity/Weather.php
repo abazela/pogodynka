@@ -33,7 +33,6 @@ class Weather
     #[ORM\Column(type: Types::FLOAT)]
     private ?float $humidity = null;
 
-    // gettery i settery...
     public function getId(): ?int { return $this->id; }
 
     public function getLocation(): ?Location { return $this->location; }

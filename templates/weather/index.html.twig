@@ -1,44 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Weather{% endblock %}
+{% block title %}Prognoza pogody{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="mb-4">Weather Data</h1>
+        <h1>Prognoza pogody</h1>
 
-        <div class="table-responsive">
-            <table class="table table-striped table-hover align-middle">
-                <thead class="table-primary">
+        {% if is_granted('ROLE_WEATHER_NEW') %}
+            <a href="{{ path('app_weather_new') }}" class="btn btn-success mb-3">+ Dodaj prognozę</a>
+        {% endif %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Miasto</th>
+                <th>Data</th>
+                <th>Temp (°C)</th>
+                <th>Wiatr (m/s)</th>
+                <th>Opady (mm)</th>
+                <th>Wilgotność (%)</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in weather_records %}
                 <tr>
-                    <th>City</th>
-                    <th>Country</th>
-                    <th>Date</th>
-                    <th>Temp (°C)</th>
-                    <th>Wind (m/s)</th>
-                    <th>Rain (mm)</th>
-                    <th>Humidity (%)</th>
+                    <td>{{ record.location.city }}, {{ record.location.country }}</td>
+                    <td>{{ record.date|date('d.m.Y') }}</td>
+                    <td>{{ record.celcius }}</td>
+                    <td>{{ record.windSpeed }}</td>
+                    <td>{{ record.precipitation }}</td>
+                    <td>{{ record.humidity }}</td>
+                    <td>
+
+                        {% if is_granted('ROLE_WEATHER_EDIT') %}
+                            <a href="{{ path('app_weather_edit', {'id': record.id}) }}" class="btn btn-sm btn-warning">edit</a>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_WEATHER_DELETE') %}
+                            <form method="post" action="{{ path('app_weather_delete', {'id': record.id}) }}" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ record.id) }}">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Na pewno usunąć?');">delete</button>
+                            </form>
+                        {% endif %}
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for w in weather_records %}
-                    <tr>
-                        <td><strong>{{ w.location.city }}</strong></td>
-                        <td>{{ w.location.country }}</td>
-                        <td>{{ w.date|date('d.m.Y') }}</td>
-                        <td>{{ w.celcius }}</td>
-                        <td>{{ w.windSpeed }}</td>
-                        <td>{{ w.precipitation }}</td>
-                        <td>{{ w.humidity }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
-                            No weather data available.
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% else %}
+                <tr><td colspan="7">Brak prognoz</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
